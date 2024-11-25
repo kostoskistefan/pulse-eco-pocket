@@ -26,16 +26,16 @@ void setup()
     Serial.begin(SERIAL_BAUD_RATE);
 
     // Create a descriptor for the DHT22 sensor
-    const dht22_descriptor_t dht22_descriptor = {
+    const dht22_sensor_descriptor_t dht22_sensor_descriptor = {
         .pin = DHT22_PIN,
         .initialization_delay = DHT22_INITIALIZATION_DELAY
     };
 
     // Create a sensor of type DH22T
     dht22 = sensor_create(
-        (void *) &dht22_descriptor,
-        dht22_initialize,
-        dht22_read_and_report
+        (void *) &dht22_sensor_descriptor,
+        dht22_sensor_initialize,
+        dht22_sensor_read_and_report
     );
 
     // Initialize the DHT22 sensor
