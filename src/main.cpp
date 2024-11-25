@@ -1,19 +1,22 @@
 #include <Arduino.h>
 #include "sensor.h"
-#include "sensor_mq2.h"
-// #include "sensor_dht11.h"
+#include "sensor_dht22.h"
 
-#define MQ2_PIN A0
+#define DHT22_PIN                  11
+#define DHT22_INITIALIZATION_DELAY 2000 // DHT22 needs 1-2 seconds to get ready when first powering up
 
-// #define DHT11_PIN                  4
-// #define DHT11_INITIALIZATION_DELAY 2000 // DHT11 needs 1-2 seconds to get ready when first powering up
+#define SERIAL_BAUD_RATE     9600
+#define SERIAL_POLL_INTERVAL 100 // Check if serial data is available every 100 ms
 
-#define SERIAL_BAUD_RATE           9600
-#define SERIAL_POLLING_INTERVAL_MS 500
-#define COMMAND_READ_AND_REPORT    '0'
+#define REPORT_INTERVAL 5000 // Report sensor data every 5 seconds
 
-// sensor_t *dht11;
-sensor_t *mq2;
+#define COMMAND_START_READ_AND_REPORT '1'
+#define COMMAND_END_READ_AND_REPORT   '0'
+
+static sensor_t *dht22;
+static uint32_t last_report_time = 0;
+static uint32_t last_serial_read_time = 0;
+static bool read_and_report_started = false;
 
 void process_command(const int command);
 
@@ -22,50 +25,59 @@ void setup()
     // Open a serial port
     Serial.begin(SERIAL_BAUD_RATE);
 
-    // Create a sensor of type DHT11
-    // const dht11_descriptor_t dht11_descriptor = {
-    //     .pin = DHT11_PIN,
-    //     .initialization_delay = DHT11_INITIALIZATION_DELAY
-    // };
-
-    // dht11 = sensor_create(
-    //     (void *) &dht11_descriptor,
-    //     dht11_initialize,
-    //     dht11_read_and_report
-    // );
-
-    // // Initialize the DHT11 sensor
-    // sensor_initialize(dht11);
-
-    const mq2_descriptor_t mq2_descriptor = {
-        .pin = MQ2_PIN
+    // Create a descriptor for the DHT22 sensor
+    const dht22_descriptor_t dht22_descriptor = {
+        .pin = DHT22_PIN,
+        .initialization_delay = DHT22_INITIALIZATION_DELAY
     };
 
-    mq2 = sensor_create((void *) &mq2_descriptor, mq2_initialize, mq2_read_and_report);
+    // Create a sensor of type DH22T
+    dht22 = sensor_create(
+        (void *) &dht22_descriptor,
+        dht22_initialize,
+        dht22_read_and_report
+    );
 
-    sensor_initialize(mq2);
+    // Initialize the DHT22 sensor
+    sensor_initialize(dht22);
+
+    // Ensure that the last times are already greater than their respective
+    // interval so that the code in the loop() function can be executed right away
+    last_report_time = millis() - REPORT_INTERVAL;
+    last_serial_read_time = millis() - SERIAL_POLL_INTERVAL;
 }
 
 void loop()
 {
-    if (Serial.available() > 0)
+    if (millis() - last_serial_read_time > SERIAL_POLL_INTERVAL)
     {
-        const int command = Serial.read();
-        process_command(command);
+        if (Serial.available() > 0)
+        {
+            const int command = Serial.read();
+            process_command(command);
+        }
+
+        last_serial_read_time = millis();
     }
 
-    delay(SERIAL_POLLING_INTERVAL_MS);
+    if (read_and_report_started == true && millis() - last_report_time > REPORT_INTERVAL)
+    {
+        sensor_read_and_report(dht22);
+        last_report_time = millis();
+    }
 }
 
 void process_command(const int command)
 {
     switch (command)
     {
-        case COMMAND_READ_AND_REPORT:
-            sensor_read_and_report(mq2);
+        case COMMAND_START_READ_AND_REPORT:
+            read_and_report_started = true;
             break;
 
-        // TODO: Auto mode
+        case COMMAND_END_READ_AND_REPORT:
+            read_and_report_started = false;
+            break;
 
         default:
             break;

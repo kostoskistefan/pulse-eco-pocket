@@ -1,5 +1,8 @@
 #pragma once
 
+#define SENSOR_ERRONEOUS_VALUE "$"
+#define SENSOR_VALUE_SEPARATOR ";"
+
 typedef struct sensor_t sensor_t;
 
 typedef void (*initialization_function_t)(const sensor_t *const sensor);
