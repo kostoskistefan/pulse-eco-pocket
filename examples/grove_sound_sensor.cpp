@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "pep.h"
-#include "sensors/dht22_sensor.h"
+#include "sensors/grove_sound_sensor.h"
 
-#define DHT22_PIN 11
+#define GROVE_SOUND_SENSOR_PIN A0
 
 #define REPORT_INTERVAL 5000 // Report sensor data every 5 seconds
 
@@ -13,8 +13,8 @@ void setup()
     // Pulse-Eco Pocket has to be initialized before creating sensors
     pep_initialize(REPORT_INTERVAL);
 
-    // Create a sensor of type DHT22
-    sensor = dht22_sensor_create(DHT22_PIN);
+    // Create a sensor of type Grove Sound Sensor
+    sensor = grove_sound_sensor_create(GROVE_SOUND_SENSOR_PIN);
 }
 
 void loop()

@@ -1,20 +1,28 @@
 #pragma once
 
-#define SENSOR_ERRONEOUS_VALUE "$"
-#define SENSOR_VALUE_SEPARATOR ";"
+#include <stdint.h>
 
-typedef struct sensor_t sensor_t;
+typedef enum sensor_data_type_t
+{
+    SENSOR_DATA_TYPE_INT,
+    SENSOR_DATA_TYPE_FLOAT,
+} sensor_data_type_t;
 
-typedef void (*initialization_function_t)(const sensor_t *const sensor);
-typedef void (*read_and_report_function_t)(sensor_t *const sensor);
+typedef struct sensor_data_t
+{
+    const char *name;
+    void *value;
+    sensor_data_type_t type;
+} sensor_data_t;
 
-sensor_t *sensor_create(
-    const void *descriptor,
-    initialization_function_t initialization_function,
-    read_and_report_function_t read_and_report_function
-);
+typedef struct sensor_t
+{
+    uint8_t data_count;
+    sensor_data_t *data;
+    void (*read)(struct sensor_t *const sensor); 
+} sensor_t;
 
-void sensor_initialize(sensor_t *const sensor);
-void sensor_read_and_report(sensor_t *const sensor);
-
-const void *sensor_get_descriptor(const sensor_t *const sensor);
+void sensor_ready(void);
+void sensor_read(sensor_t *const sensor);
+void sensor_report_data(const sensor_t *const sensor);
+void sensor_report_data_descriptors(const sensor_t *const sensor);

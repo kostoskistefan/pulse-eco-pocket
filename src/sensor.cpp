@@ -1,39 +1,52 @@
 #include "sensor.h"
-#include <stdlib.h>
+#include <Arduino.h>
 
-struct sensor_t
+void sensor_ready(void)
 {
-    const void *descriptor;
-    initialization_function_t initialization_function;
-    read_and_report_function_t read_and_report_function;
-};
-
-sensor_t *sensor_create(
-    const void *descriptor,
-    initialization_function_t initialize_function,
-    read_and_report_function_t read_and_report_function
-)
-{
-    sensor_t *sensor = (sensor_t *) malloc(sizeof(*sensor));
-
-    sensor->descriptor = descriptor;
-    sensor->initialization_function = initialize_function;
-    sensor->read_and_report_function = read_and_report_function;
-
-    return sensor;
+    // TODO: Define a "ready" sequence
+    // Serial.print("Ready");
+    // Serial.flush();
 }
 
-void sensor_initialize(sensor_t *const sensor)
+void sensor_read(sensor_t *const sensor)
 {
-    sensor->initialization_function(sensor);
+    sensor->read(sensor);
 }
 
-void sensor_read_and_report(sensor_t *const sensor)
+void sensor_report_data(const sensor_t *const sensor)
 {
-    sensor->read_and_report_function(sensor);
+    String data;
+
+    for (uint8_t i = 0; i < sensor->data_count; ++i)
+    {
+        switch (sensor->data[i].type)
+        {
+            case SENSOR_DATA_TYPE_INT:
+                data += String(*((int *)sensor->data[i].value));
+                break;
+
+            case SENSOR_DATA_TYPE_FLOAT:
+                data += String(*((float *)sensor->data[i].value));
+                break;
+        }
+
+        data += ";";
+    }
+
+    Serial.println(data);
+    Serial.flush();
 }
 
-const void *sensor_get_descriptor(const sensor_t *const sensor)
+void sensor_report_data_descriptors(const sensor_t *const sensor)
 {
-    return sensor->descriptor;
+    String data;
+
+    for (uint8_t i = 0; i < sensor->data_count; ++i)
+    {
+        data += String(sensor->data[i].name);
+        data += ";";
+    }
+
+    Serial.println(data);
+    Serial.flush();
 }
