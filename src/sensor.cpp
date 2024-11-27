@@ -1,11 +1,12 @@
 #include "sensor.h"
 #include <Arduino.h>
 
+#define SENSOR_READY_BYTE '1'
+
 void sensor_ready(void)
 {
-    // TODO: Define a "ready" sequence
-    // Serial.print("Ready");
-    // Serial.flush();
+    Serial.write(SENSOR_READY_BYTE);
+    Serial.flush();
 }
 
 void sensor_read(sensor_t *const sensor)
