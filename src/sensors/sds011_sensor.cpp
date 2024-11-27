@@ -56,7 +56,7 @@ typedef struct sds011_t
 {
     sensor_t base;
 
-    SoftwareSerial serial;
+    SoftwareSerial *serial;
 
     float pm25;
     float pm10;
@@ -74,11 +74,8 @@ sensor_t *sds011_sensor_create(const uint8_t rx_pin, const uint8_t tx_pin)
         .read = sds011_read,
     };
 
-    pinMode(rx_pin, INPUT);
-    pinMode(tx_pin, OUTPUT);
-
-    sds011->serial = SoftwareSerial(rx_pin, tx_pin);
-    sds011->serial.begin(9600);
+    sds011->serial = new SoftwareSerial(rx_pin, tx_pin);
+    sds011->serial->begin(9600);
 
     sds011->pm10 = 0.0;
     sds011->pm25 = 0.0;
@@ -91,12 +88,12 @@ sensor_t *sds011_sensor_create(const uint8_t rx_pin, const uint8_t tx_pin)
     sds011->base.data[BASE_DATA_ID_PM10].value = &sds011->pm10;
     sds011->base.data[BASE_DATA_ID_PM10].type = SENSOR_DATA_TYPE_FLOAT;
 
-    sds011->serial.write(command_set_query_reporting_mode, 19);
-    sds011->serial.flush();
+    sds011->serial->write(command_set_query_reporting_mode, 19);
+    sds011->serial->flush();
 
-    while (sds011->serial.available() > 0)
+    while (sds011->serial->available() > 0)
     {
-        sds011->serial.read();
+        sds011->serial->read();
     }
 
     sensor_ready();
@@ -112,15 +109,15 @@ void sds011_read(sensor_t *const sensor)
 
     uint8_t response[10];
 
-    sds011->serial.write(command_query_data, 19);
-    sds011->serial.flush();
+    sds011->serial->write(command_query_data, 19);
+    sds011->serial->flush();
 
-    if (sds011->serial.available() < 10)
+    if (sds011->serial->available() < 10)
     {
         return;
     }
 
-    sds011->serial.readBytes(response, 10);
+    sds011->serial->readBytes(response, 10);
 
     if (response[0] != 0xaa || response[1] != 0xc0)
     {
@@ -136,7 +133,7 @@ void sds011_read(sensor_t *const sensor)
 
     checksum &= 0xff;
 
-    if (checksum == response[9])
+    if (checksum == response[8])
     {
         sds011->pm25 = (float) (((response[3] << 8) | response[2]) / 10.0);
         sds011->pm10 = (float) (((response[5] << 8) | response[4]) / 10.0);

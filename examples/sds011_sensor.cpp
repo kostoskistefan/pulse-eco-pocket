@@ -2,8 +2,8 @@
 #include "pep.h"
 #include "sensors/sds011_sensor.h"
 
-#define SDS011_RX_PIN 2
-#define SDS011_TX_PIN 3
+#define SDS011_TX_PIN 2
+#define SDS011_RX_PIN 3
 
 #define REPORT_INTERVAL 5000 // Report sensor data every 5 seconds
 
