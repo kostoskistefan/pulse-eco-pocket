@@ -45,4 +45,4 @@ Future<void> getTodayData() async {
     print('Error fetching data: $error');
   }
 }
-}
+
