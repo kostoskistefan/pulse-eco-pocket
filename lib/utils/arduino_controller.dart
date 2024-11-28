@@ -21,6 +21,7 @@ class ArduinoController {
     List<UsbDevice> devices = await UsbSerial.listDevices();
     if (devices.isEmpty) {
       print('No USB devices found');
+      Elements.arduinoController = null;
       return;
     }
 
@@ -54,17 +55,16 @@ class ArduinoController {
   void handleArduinoInput(String string) {
     if (string == '1') {
       sendCommand(82);
-      Elements.hasUsb = true;
-      readyNotifier.notify(Elements.hasUsb);
+      Elements.hasUsb.value = true;
     }
     else if (string == '') {
       print('What?'); // TODO CHECK THIS
     }
-    else if (hasNumbers(string)) { // RECIEVED NUMBERS (P)
-      // TODO PROGRAM THIS
+    else if (hasNumbers(string)) { // RECIEVED NUMBERS (S)
+      SensorData.updateMapOfSensors(string);
     }
     else { // RECIEVED SENSOR TYPES
-      SensorData.makeListOfSensorTypes(string);
+      SensorData.makeMapOfSensors(string);
     }
   }
 

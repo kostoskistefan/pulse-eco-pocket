@@ -1,14 +1,36 @@
 import '../../../../utils/elements.dart';
 import 'Requests.dart';
 import 'enumartions/sensor_type.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SensorData {
   final SensorType type;
-  final int data;
+  late int data;
   final DateTime dateTime;
   final String location;
 
-  SensorData(this.type, this.data, this.dateTime, this.location);
+  SensorData(this.type, String value, this.dateTime, this.location) {
+    data = int.parse(value);
+  }
+
+  Future<void> getDataValue() async {
+    String url = 'https://skopje.pulse.eco/rest/overall';
+    String val = 'pm25';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonce = json.decode(response.body);
+
+      this.data = int.parse(jsonce['values'][val]);
+      print('OVDE');
+      print(data);
+
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
+
+
 
   Map<String, String> toMap() {
     String title = getTitle();
@@ -222,20 +244,18 @@ class SensorData {
 
   String getYesterdayComparison() {
     // TODO MAKE THIS PROPER
-    String url = 'https://$location.pulse.eco/rest/data24h?';
+    String url = 'https://$location.pulse.eco/rest/avgData/day?sensorId=-1&';
 
     String typece = '';
-    if (type == SensorType.PM10) typece = 'pm10';
-    else if (type == SensorType.PM10) typece = 'pm25';
-    else if (type == SensorType.PM10) typece = 'temperature';
-    else if (type == SensorType.PM10) typece = 'humidity';
-    else if (type == SensorType.PM10) typece = 'noise';
+    typece = getSensorType(typece);
 
-    url += 'type=$typece';
-    // https://skopje.pulse.eco/rest/data24h?type=humidity
+    String from = parseDateTimeToString(dateTime.subtract(const Duration(days: 2)));
+    String to = parseDateTimeToString(dateTime.subtract(const Duration(days: 1)));
 
-    // avg e ova
-    sendGetRequest(url);
+    url += 'type=$typece&from=$from&to=$to';
+
+    // sendGetRequestForYesterdayComparison(url);
+    // sendGetRequest(url);
 
     String res = '1';
     return res;
@@ -247,12 +267,7 @@ class SensorData {
     String url = 'https://$location.pulse.eco/rest/dataRaw?';
 
     String typece = '';
-    if (type == SensorType.PM10) typece = 'pm10';
-    else if (type == SensorType.PM25) typece = 'pm25';
-    else if (type == SensorType.PM1) typece = 'pm1';
-    else if (type == SensorType.Temperature) typece = 'temperature';
-    else if (type == SensorType.Humidity) typece = 'humidity';
-    else if (type == SensorType.Noise) typece = 'noise';
+    typece = getSensorType(typece);
 
     String from = parseDateTimeToString(startOfWeek(dateTime));
     String to = parseDateTimeToString(dateTime);
@@ -261,6 +276,17 @@ class SensorData {
 
     String res = '2';
     return res;
+  }
+
+  String getSensorType(String typece) {
+    if (type == SensorType.PM10) typece = 'pm10';
+    else if (type == SensorType.PM25) typece = 'pm25';
+    else if (type == SensorType.PM1) typece = 'pm1';
+    else if (type == SensorType.Temperature) typece = 'temperature';
+    else if (type == SensorType.Humidity) typece = 'humidity';
+    else if (type == SensorType.Noise) typece = 'noise';
+    else if (type == SensorType.Pressure) typece = 'pressure';
+    return typece;
   }
 
   String parseDateTimeToString(DateTime date) {
@@ -275,11 +301,45 @@ class SensorData {
     return date.subtract(Duration(days: date.weekday - 1));
   }
 
-  static void makeListOfSensorTypes(String sensors) {
+  static void makeMapOfSensors(String sensors) {
     // Humidity;Temperature;Noise Level;
-    List<String> list = sensors.split(';');
+    var split = sensors.split(';');
+    List<String> list = split.sublist(0, split.length - 1);
+
+    Map<String, String> res = {};
     for (var sensor in list) {
-      Elements.listOfSensorTypes.add(sensor);
+      res.putIfAbsent(sensor, () {
+        return "...";
+      });
+      Elements.dataOfSensors.putIfAbsent(sensor, () {
+        return [];
+      });
+    }
+    Elements.mapOfSensors.value = res;
+  }
+
+  // TODO DO WE DISPLAY AVG OR THE DATA WE GOT
+  static void updateMapOfSensors(String data) {
+    var split = data.split(';');
+    List<String> list = split.sublist(0, split.length - 1);
+
+    Map<String, String> res = {};
+    int i = 0;
+    for (var key in Elements.mapOfSensors.value.keys) {
+      res.putIfAbsent(key, () {
+        return list[i];
+      });
+      Elements.dataOfSensors[key]!.add(list[i]);
+      i++;
+    }
+    Elements.mapOfSensors.value = res;
+  }
+
+  static void readDataButton(bool readDataIsToggled) {
+    if (readDataIsToggled) {
+      Elements.arduinoController!.sendCommand(83); // S
+    } else {
+      Elements.arduinoController!.sendCommand(69); // E
     }
   }
 

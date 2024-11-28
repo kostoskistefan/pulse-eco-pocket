@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../utils/arduino_controller.dart';
 import '../../../../../utils/elements.dart';
+import '../../model/Sensor_Data.dart';
 import '../../widgets/logo_header.dart';
 
 class SensorFoundPage extends StatefulWidget {
@@ -13,20 +13,19 @@ class SensorFoundPage extends StatefulWidget {
 class _SensorFoundPageState extends State<SensorFoundPage> {
   bool readDataIsToggled = false;
   bool uploadDataIsToggled = true;
+  // List<Widget> sensorDataContainers = [];
 
-  List<Widget> createSensorButtons() {
+  List<Widget> createSensorButtons(Map<String, String> map) {
     List<Widget> res = [];
+    map.forEach((k, v) {
+      res.add(_buildSensorButton(v, k));
+    });
 
-    for (var value in Elements.listOfSensorTypes) {
-      res.add(_buildSensorButton('...', value));
-    }
-
-    return res;
+     return res;
   }
 
   @override
   Widget build(BuildContext context) {
-    print('TOP');
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,12 +44,14 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
                 ),
               ),
 
-              // const SizedBox(height: 8),
               IconButton(
                 onPressed: () {
-                  setState(() {
-                    readDataIsToggled = !readDataIsToggled;
-                  });
+                  if (Elements.mapOfSensors.value.isNotEmpty) {
+                    setState(() {
+                      readDataIsToggled = !readDataIsToggled;
+                      SensorData.readDataButton(readDataIsToggled);
+                    });
+                  }
                 },
                 icon: Icon(
                   readDataIsToggled ? Icons.toggle_on : Icons.toggle_off,
@@ -60,13 +61,26 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
               ),
 
               const SizedBox(height: 18),
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 3,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: createSensorButtons(),
+              ValueListenableBuilder<Map<String, String>>(
+                valueListenable: Elements.mapOfSensors,
+                builder: (context, sensors, child) {
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                    ),
+                    itemCount: sensors.length,
+                    itemBuilder: (context, index) {
+                      final key = sensors.keys.elementAt(index);
+                      final value = sensors[key]!;
+                      return _buildSensorButton(value, key);
+                    },
+                  );
+                },
               ),
 
               const SizedBox(height: 24),
@@ -81,70 +95,28 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
               ),
             ],
           ),
-
           Padding(
             padding: const EdgeInsets.only(bottom: 6.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // IconButton(
-                //   onPressed: () {
-                //     setState(() {
-                //       uploadDataIsToggled = !uploadDataIsToggled; // Toggle the state
-                //     });
-                //   },
-                //   icon: Icon(
-                //     uploadDataIsToggled ? Icons.toggle_on : Icons.toggle_off,
-                //     size: 70,
-                //     color: uploadDataIsToggled ? Colors.blue : Colors.grey
-                //   ),
-                // ),
-                // const Text(
-                //   'Upload to database?',
-                //   style: TextStyle(
-                //     fontSize: 16,
-                //     fontWeight: FontWeight.w400,
-                //   ),
-                // ),
-
                 IconButton(
                   onPressed: () {
-                    Elements.arduinoController!.sendCommand(82); // R
+                    setState(() {
+                      uploadDataIsToggled = !uploadDataIsToggled; // Toggle the state
+                    });
                   },
-                  icon: const Icon(
-                      Icons.call,
-                      size: 30,
-                      color: Colors.red
+                  icon: Icon(
+                    uploadDataIsToggled ? Icons.toggle_on : Icons.toggle_off,
+                    size: 70,
+                    color: uploadDataIsToggled ? Colors.blue : Colors.grey
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Elements.arduinoController!.sendCommand(83); // S
-                  },
-                  icon: const Icon(
-                      Icons.input,
-                      size: 30,
-                      color: Colors.red
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Elements.arduinoController!.sendCommand(69); // E
-                  },
-                  icon: const Icon(
-                      Icons.call_end,
-                      size: 30,
-                      color: Colors.red
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Elements.arduinoController!.disconnect();
-                  },
-                  icon: const Icon(
-                      Icons.alarm,
-                      size: 30,
-                      color: Colors.red
+                const Text(
+                  'Upload to database?',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -181,13 +153,13 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
             endIndent: 12.0,
           ),
 
-          // const SizedBox(height: 8),
           Text(
             label,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 12,
               color: Colors.black87,
+              fontWeight: FontWeight.bold
             ),
           ),
         ],

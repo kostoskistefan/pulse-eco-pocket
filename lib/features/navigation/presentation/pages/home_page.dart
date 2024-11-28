@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proba/features/navigation/presentation/pages/profile/profile_page.dart';
 import 'package:proba/features/navigation/presentation/pages/sensor/sensor_not_found_page.dart';
 import 'package:proba/features/navigation/presentation/pages/sensor/sensor_found_page.dart';
+import 'package:proba/features/navigation/presentation/pages/sensor/sensor_page.dart';
+import 'package:proba/features/navigation/presentation/pages/statistics/no_internet_page.dart';
 import 'package:proba/features/navigation/presentation/widgets/top_location_bar.dart';
 import 'package:proba/utils/elements.dart';
+import '../../../../utils/arduino_controller.dart';
 import '../blocs/navigation_cubit.dart';
 import '../widgets/bottom_navigation_bar.dart';
 
@@ -17,29 +20,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<Widget> _pages;
+  final List<Widget> _pages = [
+    const SensorPage(),
+    Elements.hasInternet ? const StatisticsPage() : const NoInternetPage(),
+    StatisticsPage(),
+    const ProfilePage(
+      profileData: {
+        'name': 'John Doe',
+        'username': '@johndoe',
+      },
+    ),
+  ];
+
+  void checkUsbAttached() {
+    Elements.arduinoController = new ArduinoController();
+    Elements.arduinoController!.connectToArduino();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Elements.arduinoController?.readyNotifier.subscribe((ready) {
-      _pages[0] = ready ? const SensorFoundPage() : const SensorNotFoundPage();
-      // openSensorFoundPage(context);
-      setState(() {
-
-      });
-    });
-
-    _pages = [
-      Elements.hasUsb ? const SensorFoundPage() : const SensorNotFoundPage(),
-      StatisticsPage(),
-      StatisticsPage(),
-      const ProfilePage(
-        profileData: {
-          'name': 'John Doe',
-          'username': '@johndoe',
-        },
-      ),
-    ];
+    checkUsbAttached();
 
     return BlocProvider(
       create: (_) => NavigationCubit(),

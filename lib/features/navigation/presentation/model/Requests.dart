@@ -1,49 +1,48 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<void> sendGetRequest(String urlce) async {
-  var url = Uri.parse('https://skopje.pulse.eco/rest/overall?type=pm10');
+import 'package:http/http.dart';
+import 'package:proba/utils/elements.dart';
 
-  // Send GET request
+import 'Sensor_Data.dart';
+
+Future<void> sendGetRequestForYesterdayComparison(String URLce) async {
+  var url = Uri.parse(URLce);
+
   var response = await http.get(url);
 
-  // Check the status code and handle the response
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
+    data = data[0];
 
-    print('Received Data:');
-    print(data);
 
 
   } else {
-    // If the server did not return a 200 OK response
     print('Request failed with status: ${response.statusCode}');
   }
 }
 
-// Function to send a POST request
-Future<void> sendPostRequest() async {
-  var url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+Future<void> getTodayData() async {
+  String apiUrl = 'https://${Elements.filterByCity.value}.pulse.eco/rest/overall';
 
-  // Define the data you want to send in the request body
-  var data = {
-    'title': 'foo',
-    'body': 'bar',
-    'userId': 1,
-  };
+  try {
+    final response = await http.get(Uri.parse(apiUrl));
 
-  // Send POST request with body data
-  var response = await http.post(
-    url,
-    headers: {'Content-Type': 'application/json'},
-    body: json.encode(data), // Convert the map to JSON
-  );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
 
-  if (response.statusCode == 201) {
-    // If the server returns a 201 Created response
-    print('Response body: ${response.body}');
-  } else {
-    // If the server did not return a 201 Created response
-    print('Request failed with status: ${response.statusCode}');
+      final values = jsonResponse['values'] as Map<String, dynamic>;
+
+      Elements.todaySensorValues.value = values.map(
+            (key, value) => MapEntry(key, value.toString()),
+      );
+      Elements.hasInternet = true;
+
+    } else {
+      throw Exception('Failed to load data. Status code: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error fetching data: $error');
   }
+}
 }
