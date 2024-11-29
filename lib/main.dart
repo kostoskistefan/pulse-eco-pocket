@@ -10,6 +10,10 @@ Future<void> main() async {
 
   runApp(MyApp());
 
+  usbEventListeners();
+}
+
+void usbEventListeners() {
   UsbSerial.usbEventStream?.listen((msg) {
     if (msg.event == UsbEvent.ACTION_USB_ATTACHED) {
       Elements.arduinoController = new ArduinoController();
@@ -36,8 +40,14 @@ Future<void> loadAllNecessaryStuff() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  void checkUsbAttached() {
+    Elements.arduinoController = new ArduinoController();
+    Elements.arduinoController!.connectToArduino();
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkUsbAttached(); // CHECK IF HAS SENSOR CONNECTED
     return MaterialApp(
       title: 'CodeFu Architecture',
       theme: ThemeData(

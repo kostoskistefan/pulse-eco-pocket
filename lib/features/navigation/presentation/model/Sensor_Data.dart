@@ -1,5 +1,4 @@
 import '../../../../utils/elements.dart';
-import 'Requests.dart';
 import 'enumartions/sensor_type.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -30,8 +29,6 @@ class SensorData {
     }
   }
 
-
-
   Map<String, String> toMap() {
     String title = getTitle();
     String particles = getParticles();
@@ -52,10 +49,6 @@ class SensorData {
 
   String getTitle() {
     String result = type.toString();
-
-    // if (type.toString().contains('PM') || type.toString().contains('O')) {
-    //   result = 'Air quality ($type)';
-    // }
 
     switch (type) {
       case SensorType.PM10:

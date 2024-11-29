@@ -13,16 +13,6 @@ class SensorFoundPage extends StatefulWidget {
 class _SensorFoundPageState extends State<SensorFoundPage> {
   bool readDataIsToggled = false;
   bool uploadDataIsToggled = true;
-  // List<Widget> sensorDataContainers = [];
-
-  List<Widget> createSensorButtons(Map<String, String> map) {
-    List<Widget> res = [];
-    map.forEach((k, v) {
-      res.add(_buildSensorButton(v, k));
-    });
-
-     return res;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +75,7 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
 
               const SizedBox(height: 24),
               const Text(
-                'Vizualize this data',
+                'Vizualize this data',  // TODO Make this work
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,

@@ -2,20 +2,11 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:proba/features/navigation/presentation/model/Sensor_Data.dart';
 import 'package:usb_serial/usb_serial.dart';
-import 'package:flutter/material.dart';
-
-import '../features/navigation/presentation/model/Notifier.dart';
-import '../features/navigation/presentation/pages/sensor/sensor_found_page.dart';
 import 'elements.dart';
 
 class ArduinoController {
-
-  // static ArduinoController? arduinoController;
-
   UsbPort? port;
   StreamSubscription<Uint8List>? listen;
-  Notifier<bool> readyNotifier = new Notifier<bool>();
-
 
   Future<void> connectToArduino() async {
     List<UsbDevice> devices = await UsbSerial.listDevices();

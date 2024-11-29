@@ -4,6 +4,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.USB_PERMISSION"/>
+<!--    <uses-permission android:name="android.permission.CAMERA"/>-->
     <uses-feature android:name="android.hardware.usb.host"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

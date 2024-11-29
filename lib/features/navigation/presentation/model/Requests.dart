@@ -1,11 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:http/http.dart';
 import 'package:proba/utils/elements.dart';
 
-import 'Sensor_Data.dart';
-
+// not in use FOR NOW
 Future<void> sendGetRequestForYesterdayComparison(String URLce) async {
   var url = Uri.parse(URLce);
 
@@ -45,4 +42,4 @@ Future<void> getTodayData() async {
     print('Error fetching data: $error');
   }
 }
-}
+
