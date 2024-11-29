@@ -38,13 +38,27 @@ void sensor_report_data(const sensor_t *const sensor)
     Serial.flush();
 }
 
-void sensor_report_data_descriptors(const sensor_t *const sensor)
+void sensor_report_data_units(const sensor_t *const sensor)
 {
     String data;
 
     for (uint8_t i = 0; i < sensor->data_count; ++i)
     {
-        data += String(sensor->data[i].name);
+        data += sensor->data[i].unit;
+        data += ";";
+    }
+
+    Serial.println(data);
+    Serial.flush();
+}
+
+void sensor_report_data_labels(const sensor_t *const sensor)
+{
+    String data;
+
+    for (uint8_t i = 0; i < sensor->data_count; ++i)
+    {
+        data += sensor->data[i].label;
         data += ";";
     }
 

@@ -37,12 +37,14 @@ sensor_t *dht22_sensor_create(const uint8_t pin)
     dht22->humidity = 0.0;
     dht22->temperature = 0.0;
 
-    dht22->base.data[BASE_DATA_ID_HUMIDITY].name = (const char *) "Humidity";
     dht22->base.data[BASE_DATA_ID_HUMIDITY].value = &dht22->humidity;
+    dht22->base.data[BASE_DATA_ID_HUMIDITY].label = (const char *) "Humidity";
+    dht22->base.data[BASE_DATA_ID_HUMIDITY].unit = (const char *) "%";
     dht22->base.data[BASE_DATA_ID_HUMIDITY].type = SENSOR_DATA_TYPE_FLOAT;
 
-    dht22->base.data[BASE_DATA_ID_TEMPERATURE].name = (const char *) "Temperature";
     dht22->base.data[BASE_DATA_ID_TEMPERATURE].value = &dht22->temperature;
+    dht22->base.data[BASE_DATA_ID_TEMPERATURE].label = (const char *) "Temperature";
+    dht22->base.data[BASE_DATA_ID_TEMPERATURE].unit = (const char *) "°C";
     dht22->base.data[BASE_DATA_ID_TEMPERATURE].type = SENSOR_DATA_TYPE_FLOAT;
 
     // DHT22 needs 1-2 seconds to get ready when first powering up

@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include "pep.h"
-#include "sensors/grove_sound_sensor.h"
+#include "sensors/sds011_sensor.h"
 
-#define GROVE_SOUND_SENSOR_PIN A3
+#define SDS011_TX_PIN 2
+#define SDS011_RX_PIN 3
 
 #define REPORT_INTERVAL 5000 // Report sensor data every 5 seconds
 
@@ -13,8 +14,8 @@ void setup()
     // Pulse-Eco Pocket has to be initialized before creating sensors
     pep_initialize(REPORT_INTERVAL);
 
-    // Create a sensor of type Grove Sound Sensor
-    sensor = grove_sound_sensor_create(GROVE_SOUND_SENSOR_PIN);
+    // Create a sensor of type SDS011
+    sensor = sds011_sensor_create(SDS011_RX_PIN, SDS011_TX_PIN);
 }
 
 void loop()

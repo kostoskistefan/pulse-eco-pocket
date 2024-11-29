@@ -10,7 +10,8 @@ typedef enum sensor_data_type_t
 
 typedef struct sensor_data_t
 {
-    const char *name;
+    const char *label;
+    const char *unit;
     void *value;
     sensor_data_type_t type;
 } sensor_data_t;
@@ -25,4 +26,5 @@ typedef struct sensor_t
 void sensor_ready(void);
 void sensor_read(sensor_t *const sensor);
 void sensor_report_data(const sensor_t *const sensor);
-void sensor_report_data_descriptors(const sensor_t *const sensor);
+void sensor_report_data_units(const sensor_t *const sensor);
+void sensor_report_data_labels(const sensor_t *const sensor);

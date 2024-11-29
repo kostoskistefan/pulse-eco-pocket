@@ -54,8 +54,12 @@ void process_command(const int command, const sensor_t *const sensor)
             read_and_report_started = false;
             break;
 
-        case COMMAND_REQUEST_DATA_DESCRIPTOR:
-            sensor_report_data_descriptors(sensor);
+        case COMMAND_REQUEST_DATA_LABELS:
+            sensor_report_data_labels(sensor);
+            break;
+
+        case COMMAND_REQUEST_DATA_UNITS:
+            sensor_report_data_units(sensor);
             break;
 
         default:
