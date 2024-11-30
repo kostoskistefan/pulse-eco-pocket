@@ -16,22 +16,24 @@ class _SensorPageState extends State<SensorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: ValueListenableBuilder<bool>(
-              valueListenable: Elements.hasUsb,
-              builder: (context, usbAttached, child) {
-                if (usbAttached) {
-                  return const SensorFoundPage();
-                } else {
-                  return const SensorNotFoundPage();
-                }
-              },
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ValueListenableBuilder<bool>(
+                valueListenable: Elements.hasUsb,
+                builder: (context, usbAttached, child) {
+                  if (usbAttached) {
+                    return const SensorFoundPage();
+                  } else {
+                    return const SensorNotFoundPage();
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

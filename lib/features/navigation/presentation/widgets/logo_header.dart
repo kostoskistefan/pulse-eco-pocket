@@ -10,15 +10,16 @@ class LogoHeaderWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16.0), // Spacing around the logo
-      child: Column(
+      child: const Column(
         children: [
-          // Logo in the center of the top of the screen
-          Image.asset(
-            logoPath,
-            width: 100.0, // Adjust size as needed
-            height: 100.0,
-            fit: BoxFit.contain,
-          ),
+          Text(
+            "Pulse Eco Pocket",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
+              color: Colors.black
+            ),
+          )
         ],
       ),
     );

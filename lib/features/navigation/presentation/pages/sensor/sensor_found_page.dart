@@ -120,9 +120,9 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
   Widget _buildSensorButton(String value, String label) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: Colors.lightGreen[50],
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.blue, width: 2),
+        border: Border.all(color: Colors.green, width: 2),
       ),
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -131,13 +131,13 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
           Text(
             value,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),
 
           const Divider(
-            color: Colors.blue,
+            color: Colors.green,
             thickness: 2.0,
             indent: 12.0,
             endIndent: 12.0,
