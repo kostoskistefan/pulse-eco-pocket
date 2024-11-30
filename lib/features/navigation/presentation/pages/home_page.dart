@@ -21,12 +21,7 @@ class _HomePageState extends State<HomePage> {
     const SensorPage(),
     Elements.hasInternet ? const StatisticsPage() : const NoInternetPage(),
     const StatisticsPage(),
-    const ProfilePage(
-      profileData: {
-        'name': 'John Doe',
-        'username': '@johndoe',
-      },
-    ),
+    ProfilePage(),
   ];
 
   @override
