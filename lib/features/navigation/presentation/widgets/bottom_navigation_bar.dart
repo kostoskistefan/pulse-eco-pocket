@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/navigation_cubit.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
+  static double navbarHeight = 0;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, int>(

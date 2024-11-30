@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proba/features/navigation/presentation/pages/camera/camera_page.dart';
 import 'package:proba/features/navigation/presentation/pages/profile/profile_page.dart';
 import 'package:proba/features/navigation/presentation/pages/sensor/sensor_page.dart';
 import 'package:proba/features/navigation/presentation/pages/statistics/no_internet_page.dart';
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const SensorPage(),
     Elements.hasInternet ? const StatisticsPage() : const NoInternetPage(),
-    const StatisticsPage(),
+    CameraPage(),
     const ProfilePage(
       profileData: {
         'name': 'John Doe',
