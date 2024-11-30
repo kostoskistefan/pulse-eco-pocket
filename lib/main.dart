@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
     checkUsbAttached(); // CHECK IF HAS SENSOR CONNECTED
     return MaterialApp(
       title: 'CodeFu Architecture',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
