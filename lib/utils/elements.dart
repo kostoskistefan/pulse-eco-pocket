@@ -9,14 +9,11 @@ class Elements {
   static ArduinoController? arduinoController;
   static ValueNotifier<bool> hasUsb = ValueNotifier<bool>(false);
   static bool hasInternet = false;
-  static ValueNotifier<Map<String, String>> mapOfSensors = ValueNotifier<Map<String, String>>({
-    "tmp": '...',
-    "tmp1": '...',
-    "tmp2": '...',
-    "tmp3": '...',
-  });
+  static ValueNotifier<Map<String, String>> mapOfSensors = ValueNotifier<Map<String, String>>({});
   static Map<String, String> mapOfSensorsUnits = {};
   static Map<String, List<String>> dataOfSensors = {};
+
+  static String aiResponse = '';
 
   static List<String> availableDates = [
     DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now()),
