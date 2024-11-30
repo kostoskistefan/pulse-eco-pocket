@@ -25,6 +25,7 @@ class InfoStatsPage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.lightGreen[50],
         border: Border.all(color: Colors.green, width: 1.0),
+        borderRadius: BorderRadius.circular(16.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,13 +73,13 @@ class InfoStatsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "• $yesterdayComparison",
+                "$yesterdayComparison",
                 style: const TextStyle(
                   fontSize: 18.0,
                 ),
               ),
               Text(
-                "• $weekComparison",
+                "$weekComparison",
                 style: const TextStyle(
                   fontSize: 18.0,
                 ),

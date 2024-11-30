@@ -17,8 +17,8 @@ class Elements {
 
   static List<String> availableDates = [
     DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now()),
-    DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 1))),
-    DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 2))),
+    // DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 1))),
+    // DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 2))),
   ];
   static List<String> availableCities = ["skopje",
                                         "tirana",

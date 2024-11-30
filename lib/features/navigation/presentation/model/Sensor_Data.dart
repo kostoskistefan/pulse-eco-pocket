@@ -3,6 +3,7 @@ import '../../../../utils/elements.dart';
 import 'enumartions/sensor_type.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
 
 class SensorData {
   final SensorType type;
@@ -22,7 +23,6 @@ class SensorData {
       var jsonce = json.decode(response.body);
 
       this.data = int.parse(jsonce['values'][val]);
-      print('OVDE');
       print(data);
 
     } else {
@@ -42,9 +42,9 @@ class SensorData {
       'title': title,
       'particles': particles,
       'description': desc,
-      'comparisonText': comparisonText,
-      'yesterdayComparison': yesterdayComparison,
-      'weekComparison': weekComparison,
+      'comparisonText': '',
+      'yesterdayComparison': '',
+      'weekComparison': '',
     };
   }
 
@@ -327,6 +327,41 @@ class SensorData {
       i++;
     }
     Elements.mapOfSensors.value = res;
+
+    Elements.mapOfSensors.value.forEach((k, v) {
+      Map<String, String> updateJson = {
+        "sensorId": 'Given by Pulse Eco',
+        "position": "42.006168835581406 21.410470615339875",
+        "stamp": DateTime.now().toString(),
+        "year": DateTime.now().year.toString(),
+        "type": k,
+        "value": v
+      };
+      updateDataCollectedJson(updateJson);
+    });
+  }
+
+  static void updateDataCollectedJson(Map<String, String> updateJson) async {
+    final filePath = './json/data_collected.json';
+    final file = File(filePath);
+
+    try {
+      if (await file.exists()) {
+        final fileContents = await file.readAsString();
+        final Map<String, String> existingData = Map<String, String>.from(jsonDecode(fileContents));
+
+        existingData.addAll(updateJson);
+
+        await file.writeAsString(jsonEncode(existingData), mode: FileMode.write);
+      } else {
+        await file.create(recursive: true);
+        await file.writeAsString(jsonEncode(updateJson), mode: FileMode.write);
+      }
+
+      print('File updated successfully!');
+    } catch (e) {
+      print('An error occurred while updating the file: $e');
+    }
   }
 
   static void readDataButton(bool readDataIsToggled) {
