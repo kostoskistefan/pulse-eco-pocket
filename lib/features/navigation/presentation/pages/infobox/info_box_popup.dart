@@ -28,9 +28,10 @@ class PopupButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          title: const Text('Info Box'),
+          title: const Text('Pulse Eco Pocket'),
           content: const Text(
-            'This is a simple info box. You can put any content here.\n',
+            'Discover and contribute to real-time environmental monitoring with the Pulse Eco App.\nThis app connects with the Pulse Eco platform, providing vital information about various urban sensors.\n\n' +
+                'Also you can connect external sensors directly to your phone to collect the data and view it and seamlessly upload it to the Pulse Eco database in real-time.',
             style: TextStyle(fontSize: 16),
           ),
           actions: [

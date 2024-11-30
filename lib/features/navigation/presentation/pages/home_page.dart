@@ -21,13 +21,9 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const SensorPage(),
     Elements.hasInternet ? const StatisticsPage() : const NoInternetPage(),
+    const StatisticsPage(),
     CameraPage(),
-    const ProfilePage(
-      profileData: {
-        'name': 'John Doe',
-        'username': '@johndoe',
-      },
-    ),
+    ProfilePage(),
   ];
 
   @override

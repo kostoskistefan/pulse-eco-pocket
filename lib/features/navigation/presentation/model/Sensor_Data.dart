@@ -1,3 +1,4 @@
+import '../../../../utils/arduino_controller.dart';
 import '../../../../utils/elements.dart';
 import 'enumartions/sensor_type.dart';
 import 'package:http/http.dart' as http;
@@ -112,7 +113,7 @@ class SensorData {
         break;
 
       case SensorType.Noise:
-        result = '$data dBA';;
+        result = '$data dBA';
         break;
 
       case SensorType.Temperature:
@@ -320,7 +321,7 @@ class SensorData {
     int i = 0;
     for (var key in Elements.mapOfSensors.value.keys) {
       res.putIfAbsent(key, () {
-        return list[i];
+        return '${list[i]}\n${Elements.mapOfSensorsUnits[key]}';
       });
       Elements.dataOfSensors[key]!.add(list[i]);
       i++;
@@ -330,10 +331,28 @@ class SensorData {
 
   static void readDataButton(bool readDataIsToggled) {
     if (readDataIsToggled) {
-      Elements.arduinoController!.sendCommand(83); // S
+      Elements.arduinoController!.state = ArduinoControllerState.READING_DATA;
+      Elements.arduinoController!.sendCommand(ArduinoControllerCommand.REQUEST_DATA_START.value);
     } else {
-      Elements.arduinoController!.sendCommand(69); // E
+      Elements.arduinoController!.state = ArduinoControllerState.IDLE;
+      Elements.arduinoController!.sendCommand(ArduinoControllerCommand.REQUEST_DATA_END.value);
     }
+  }
+
+  static void addUnitsForSensors(String response) {
+    var split = response.split(';');
+    List<String> list = split.sublist(0, split.length - 1);
+
+    int i = 0;
+    Map<String, String> res = {};
+    Elements.mapOfSensors.value.forEach((k, v) {
+      res.putIfAbsent(k, () {
+        return list[i].replaceAll('Î¼', 'µ');
+      });
+      i++;
+    });
+
+    Elements.mapOfSensorsUnits = res;
   }
 
   @override
