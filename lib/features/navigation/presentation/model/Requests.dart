@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:proba/utils/elements.dart';
+import 'package:pulse_eco_pocket/utils/elements.dart';
 
 // not in use FOR NOW
 Future<void> sendGetRequestForYesterdayComparison(String URLce) async {

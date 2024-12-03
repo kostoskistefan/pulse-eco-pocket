@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:proba/features/navigation/presentation/model/Sensor_Data.dart';
+import 'package:pulse_eco_pocket/features/navigation/presentation/model/Sensor_Data.dart';
 import 'package:usb_serial/usb_serial.dart';
 import 'elements.dart';
 

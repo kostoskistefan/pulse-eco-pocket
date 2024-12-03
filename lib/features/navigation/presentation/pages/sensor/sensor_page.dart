@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proba/features/navigation/presentation/pages/sensor/sensor_found_page.dart';
-import 'package:proba/features/navigation/presentation/pages/sensor/sensor_not_found_page.dart';
+import 'package:pulse_eco_pocket/features/navigation/presentation/pages/sensor/sensor_found_page.dart';
+import 'package:pulse_eco_pocket/features/navigation/presentation/pages/sensor/sensor_not_found_page.dart';
 
 import '../../../../../utils/elements.dart';
 

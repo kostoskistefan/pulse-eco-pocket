@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:proba/utils/elements.dart';
+import 'package:pulse_eco_pocket/utils/elements.dart';
 import 'package:usb_serial/usb_serial.dart';
 import 'features/navigation/presentation/pages/home_page.dart';
 import 'utils/arduino_controller.dart';

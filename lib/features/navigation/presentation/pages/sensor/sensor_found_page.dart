@@ -151,8 +151,8 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
       prompt += '${sensor.key}: ${sensor.value}, '.replaceAll('\n', '');
     }
 
-    final ollama = Ollama(baseUrl: Uri.parse('http://192.168.0.102:11434'));
-    final stream = ollama.chat([ChatMessage(role: 'assistant', content: prompt)], model: 'mistral');
+    final ollama = Ollama(baseUrl: Uri.parse('http://192.168.113.150:11434'));
+    final stream = ollama.chat([ChatMessage(role: 'user', content: prompt)], model: 'mistral');
 
     String response = '';
 

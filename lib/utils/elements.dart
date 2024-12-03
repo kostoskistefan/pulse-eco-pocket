@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:proba/features/navigation/presentation/model/Requests.dart';
-import 'package:proba/utils/arduino_controller.dart';
+import 'package:pulse_eco_pocket/features/navigation/presentation/model/Requests.dart';
+import 'package:pulse_eco_pocket/utils/arduino_controller.dart';
 import '../features/navigation/presentation/model/Sensor_Data.dart';
 import '../features/navigation/presentation/model/enumartions/sensor_type.dart';
 
