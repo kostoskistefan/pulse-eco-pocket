@@ -51,7 +51,7 @@ class ParticlePainter extends CustomPainter {
     var data = Elements.mapOfSensors.value;
     for (var dataType in data.keys) {
       Offset position = Offset(random.nextDouble() * maxWidth, random.nextDouble() * maxHeight);
-      double numOfParticles = double.parse(data[dataType]!);
+      double numOfParticles = double.parse(data[dataType]!.split('\n')[0]);
       switch(dataType) {
         case 'PM10':
           Offset velocity = Offset(random.nextDouble() - 0.5, random.nextDouble() - 0.5);
