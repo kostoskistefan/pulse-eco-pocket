@@ -1,12 +1,9 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../../main.dart';
-import '../../../../../utils/elements.dart';
-import '../../model/Particles.dart';
+import 'package:flutter/material.dart';
+import 'package:pulse_eco_pocket/main.dart';
+import 'package:pulse_eco_pocket/utils/elements.dart';
+import 'package:pulse_eco_pocket/model/Particles.dart';
 
 class CameraPage extends StatefulWidget {
   static final GlobalKey cameraKey = GlobalKey();

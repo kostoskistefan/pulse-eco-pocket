@@ -1,6 +1,6 @@
 import '../../../../utils/arduino_controller.dart';
 import '../../../../utils/elements.dart';
-import 'enumartions/sensor_type.dart';
+import 'enumerations/sensor_type.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';

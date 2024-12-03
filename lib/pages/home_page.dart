@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pulse_eco_pocket/features/navigation/presentation/pages/camera/camera_page.dart';
-import 'package:pulse_eco_pocket/features/navigation/presentation/pages/profile/profile_page.dart';
-import 'package:pulse_eco_pocket/features/navigation/presentation/pages/sensor/sensor_page.dart';
-import 'package:pulse_eco_pocket/features/navigation/presentation/pages/statistics/no_internet_page.dart';
-import 'package:pulse_eco_pocket/features/navigation/presentation/pages/statistics/statistics_page.dart';
 import 'package:pulse_eco_pocket/utils/elements.dart';
-import '../blocs/navigation_cubit.dart';
-import '../widgets/bottom_navigation_bar.dart';
+import 'package:pulse_eco_pocket/blocs/navigation_cubit.dart';
+import 'package:pulse_eco_pocket/pages/sensor/sensor_page.dart';
+import 'package:pulse_eco_pocket/pages/camera/camera_page.dart';
+import 'package:pulse_eco_pocket/pages/profile/profile_page.dart';
+import 'package:pulse_eco_pocket/widgets/bottom_navigation_bar.dart';
+import 'package:pulse_eco_pocket/pages/statistics/statistics_page.dart';
+import 'package:pulse_eco_pocket/pages/statistics/no_internet_page.dart';
 
 class HomePage extends StatefulWidget {
 

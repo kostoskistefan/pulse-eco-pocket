@@ -2,9 +2,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:pulse_eco_pocket/utils/elements.dart';
 import 'package:usb_serial/usb_serial.dart';
-import 'features/navigation/presentation/pages/home_page.dart';
+import 'pages/home_page.dart';
 import 'utils/arduino_controller.dart';
-import 'features/navigation/presentation/model/Requests.dart';
+import 'model/Requests.dart';
 
 List<CameraDescription> cameras = [];
 

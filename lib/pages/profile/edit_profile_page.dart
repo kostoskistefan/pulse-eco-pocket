@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../model/User.dart';
+import 'package:pulse_eco_pocket/model/User.dart';
 
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({required this.user});

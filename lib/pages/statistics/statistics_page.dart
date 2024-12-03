@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../utils/elements.dart';
-import '../../widgets/top_location_bar.dart';
+import 'package:pulse_eco_pocket/utils/elements.dart';
+import 'package:pulse_eco_pocket/widgets/top_location_bar.dart';
 import 'info_stats_page.dart';
 
 class StatisticsPage extends StatelessWidget {

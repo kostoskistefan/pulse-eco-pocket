@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../model/Achievement.dart';
-import '../../model/User.dart';
-import '../../model/UserStatistics.dart';
+import 'package:pulse_eco_pocket/model/User.dart';
+import 'package:pulse_eco_pocket/model/Achievement.dart';
+import 'package:pulse_eco_pocket/model/UserStatistics.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {

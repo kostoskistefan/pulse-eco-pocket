@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ollama/ollama.dart';
-import '../../../../../utils/elements.dart';
-import '../../model/Sensor_Data.dart';
-import '../../widgets/logo_header.dart';
+import 'package:pulse_eco_pocket/utils/elements.dart';
+import 'package:pulse_eco_pocket/model/Sensor_Data.dart';
 
 class SensorFoundPage extends StatefulWidget {
   const SensorFoundPage({super.key});
@@ -15,12 +14,13 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
   bool readDataIsToggled = false;
   bool uploadDataIsToggled = true;
   bool isLoading = false;
+  String aiResponse = '';
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      Elements.aiResponse = '';
+      aiResponse = '';
       isLoading = false;
     });
   }
@@ -34,7 +34,6 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
           children: [
             Column(
               children: [
-                const LogoHeaderWidget(logoPath: 'lib/features/navigation/presentation/images/logo.png'),
                 const SizedBox(height: 32),
                 const Text(
                   'Read data',
@@ -84,7 +83,7 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    Elements.aiResponse,
+                    aiResponse,
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontSize: 16
@@ -134,7 +133,7 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
 
   Future<void> _interpretData() async {
     setState(() {
-      Elements.aiResponse = '';
+      aiResponse = '';
       isLoading = true;
     });
 
@@ -161,8 +160,8 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
     }
 
     setState(() {
-      Elements.aiResponse = response;
-      isLoading = false; // Hide the loading spinner when the response is received
+      aiResponse = response;
+      isLoading = false;
     });
   }
 
@@ -196,7 +195,8 @@ class _SensorFoundPageState extends State<SensorFoundPage> {
             style: const TextStyle(
               fontSize: 12,
               color: Colors.black87,
-              fontWeight: FontWeight.bold),
+              fontWeight: FontWeight.bold
+            ),
           ),
         ],
       ),

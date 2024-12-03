@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import '../../../../utils/elements.dart';
 import '../pages/camera/camera_page.dart';
-import './enumartions/particle_type.dart';
+import './enumerations/particle_type.dart';
 import 'dart:math';
 
 class Particle {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:pulse_eco_pocket/features/navigation/presentation/model/Requests.dart';
+import 'package:pulse_eco_pocket/model/Requests.dart';
 import 'package:pulse_eco_pocket/utils/arduino_controller.dart';
-import '../features/navigation/presentation/model/Sensor_Data.dart';
-import '../features/navigation/presentation/model/enumartions/sensor_type.dart';
+import '../model/Sensor_Data.dart';
+import '../model/enumerations/sensor_type.dart';
 
 class Elements {
   static ArduinoController? arduinoController;
@@ -12,8 +12,6 @@ class Elements {
   static ValueNotifier<Map<String, String>> mapOfSensors = ValueNotifier<Map<String, String>>({});
   static Map<String, String> mapOfSensorsUnits = {};
   static Map<String, List<String>> dataOfSensors = {};
-
-  static String aiResponse = '';
 
   static List<String> availableDates = [
     DateFormat('EEEE\nMMMM d, yyyy').format(DateTime.now()),
