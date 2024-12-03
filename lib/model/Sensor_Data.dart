@@ -1,9 +1,9 @@
-import '../../../../utils/arduino_controller.dart';
-import '../../../../utils/elements.dart';
+import 'dart:io';
+import 'dart:convert';
 import 'enumerations/sensor_type.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:io';
+import 'package:pulse_eco_pocket/utils/elements.dart';
+import 'package:pulse_eco_pocket/utils/arduino_controller.dart';
 
 class SensorData {
   final SensorType type;

@@ -1,10 +1,10 @@
+import 'dart:math';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import '../../../../utils/elements.dart';
-import '../pages/camera/camera_page.dart';
-import './enumerations/particle_type.dart';
-import 'dart:math';
+import 'package:pulse_eco_pocket/utils/elements.dart';
+import 'package:pulse_eco_pocket/pages/camera/camera_page.dart';
+import 'enumerations/particle_type.dart';
 
 class Particle {
   ParticleType type;
