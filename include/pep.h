@@ -2,10 +2,9 @@
 
 #include <stdint.h>
 
-#define COMMAND_START_READ_AND_REPORT 'S'
-#define COMMAND_END_READ_AND_REPORT   'E'
-#define COMMAND_REQUEST_DATA_LABELS   'L'
-#define COMMAND_REQUEST_DATA_UNITS    'U'
+#define COMMAND_START_READ_AND_REPORT         'S'
+#define COMMAND_END_READ_AND_REPORT           'E'
+#define COMMAND_REQUEST_LABELS_AND_UNITS 'L'
 
 #define SERIAL_BAUD_RATE     9600
 #define SERIAL_POLL_INTERVAL 100 // Check if serial data is available every 100 ms

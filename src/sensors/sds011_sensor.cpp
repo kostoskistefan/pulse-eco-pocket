@@ -84,12 +84,12 @@ sensor_t *sds011_sensor_create(const uint8_t rx_pin, const uint8_t tx_pin)
 
     sds011->base.data[BASE_DATA_ID_PM25].value = &sds011->pm25;
     sds011->base.data[BASE_DATA_ID_PM25].label = (const char *) "PM2.5";
-    sds011->base.data[BASE_DATA_ID_PM25].unit = (const char *) "μg/m3";
+    sds011->base.data[BASE_DATA_ID_PM25].unit = (const char *) "ug/m3";
     sds011->base.data[BASE_DATA_ID_PM25].type = SENSOR_DATA_TYPE_FLOAT;
 
     sds011->base.data[BASE_DATA_ID_PM10].value = &sds011->pm10;
     sds011->base.data[BASE_DATA_ID_PM10].label = (const char *) "PM10";
-    sds011->base.data[BASE_DATA_ID_PM10].unit = (const char *) "μg/m3";
+    sds011->base.data[BASE_DATA_ID_PM10].unit = (const char *) "ug/m3";
     sds011->base.data[BASE_DATA_ID_PM10].type = SENSOR_DATA_TYPE_FLOAT;
 
     sds011->serial->write(command_set_query_reporting_mode, 19);

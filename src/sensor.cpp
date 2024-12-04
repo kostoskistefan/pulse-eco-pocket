@@ -23,45 +23,33 @@ void sensor_report_data(const sensor_t *const sensor)
         switch (sensor->data[i].type)
         {
             case SENSOR_DATA_TYPE_INT:
-                data += String(*((int *)sensor->data[i].value));
+                data += String(*((int *) sensor->data[i].value));
                 break;
 
             case SENSOR_DATA_TYPE_FLOAT:
-                data += String(*((float *)sensor->data[i].value));
+                data += String(*((float *) sensor->data[i].value));
                 break;
         }
 
         data += ";";
     }
 
-    Serial.println(data);
+    Serial.print(data);
     Serial.flush();
 }
 
-void sensor_report_data_units(const sensor_t *const sensor)
-{
-    String data;
-
-    for (uint8_t i = 0; i < sensor->data_count; ++i)
-    {
-        data += sensor->data[i].unit;
-        data += ";";
-    }
-
-    Serial.println(data);
-    Serial.flush();
-}
-
-void sensor_report_data_labels(const sensor_t *const sensor)
+void sensor_report_labels_and_units(const sensor_t *const sensor)
 {
     String data;
 
     for (uint8_t i = 0; i < sensor->data_count; ++i)
     {
         data += sensor->data[i].label;
+        data += ",";
+        data += sensor->data[i].unit;
         data += ";";
     }
 
-    Serial.println(data);
+    Serial.print(data);
     Serial.flush();
 }

@@ -26,5 +26,4 @@ typedef struct sensor_t
 void sensor_ready(void);
 void sensor_read(sensor_t *const sensor);
 void sensor_report_data(const sensor_t *const sensor);
-void sensor_report_data_units(const sensor_t *const sensor);
-void sensor_report_data_labels(const sensor_t *const sensor);
+void sensor_report_labels_and_units(const sensor_t *const sensor);
